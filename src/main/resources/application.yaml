@@ -9,5 +9,15 @@ logging:
     cd.cc: debug
   pattern:
     dateformat: HH:mm:ss
-mybatis:
-  mapper-locations: classpath*:mapper/*.xml
+
+mybatis-plus:
+  type-aliases-package: cd.cc.domain.po #别名扫描包，用户减小mapper xml的包名写法
+  mapper-locations: classpath*:/mapper/**/*.xml # Mapper.xml 文件地址
+  configuration:
+    map-underscore-to-camel-case: true # 开启下划线和驼峰映射
+    cache-enabled: false # 是否开启二级缓存
+  global-config:
+    db-config:
+      id-type: assign_id # 设置主键 id 为雪花算法生成
+      update-strategy: not_null #更新策略：只更新非空字段
+

@@ -2,19 +2,11 @@ package cd.cc.mapper;
 
 
 import cd.cc.domain.po.User;
-import org.apache.ibatis.annotations.Param;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import java.util.List;
+/**
+ * 继承 BaseMapper。基于反射获取实体类信息作为数据库表信息
+ */
+public interface UserMapper extends BaseMapper<User> {
 
-public interface UserMapper{
-
-    void saveUser(User user);
-
-    void deleteUser(Long id);
-
-    void updateUser(User user);
-
-    User queryUserById(@Param("id") Long id);
-
-    List<User> queryUserByIds(@Param("ids") List<Long> ids);
 }

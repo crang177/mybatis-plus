@@ -3,4 +3,7 @@
 <mapper namespace="cd.cc.mapper.UserMapper">
 
 
+    <update id="updateBalanceByWrapper">
+        update user set balance = balance - #{amount}  ${ew.customSqlSegment}
+    </update>
 </mapper>

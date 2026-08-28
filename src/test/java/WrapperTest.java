@@ -99,4 +99,19 @@ public class WrapperTest {
     }
 
 
+
+
+    // 自定义 SQL 拼接。写的sql语句应该在mapper层
+    @Test
+    void testLambdaUpdateWrapper02(){
+        List<Long> ids = List.of(1L, 2L, 3L);
+        int amount = 300;
+
+        LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper
+                .in(User::getId,ids);   // where 下的条件
+        userMapper.updateBalanceByWrapper(amount,updateWrapper);
+    }
+
+
 }

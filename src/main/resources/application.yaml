@@ -20,4 +20,16 @@ mybatis-plus:
     db-config:
       id-type: assign_id # 设置主键 id 为雪花算法生成
       update-strategy: not_null #更新策略：只更新非空字段
+knife4j:
+  enable: true
+  openapi:
+    title: 用户接口管理
+    description: 描述
+    version: 1.0.0
+    group:
+      default:
+        group-name: default
+        api-rule: package
+        api-rule-resources:
+          - cd.cc.controller
 

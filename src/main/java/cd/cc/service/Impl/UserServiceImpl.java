@@ -27,7 +27,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements IUs
         if (user == null || user.getStatus() == 2){
             throw new RuntimeException("用户状态异常");
         }
-        userMapper.deductBalanceById(id,amount);
+        if (user.getBalance() < amount){
+            throw  new RuntimeException("用户余额不足");
+        }
+
+        int remainBalance = user.getBalance() - amount;
+        this.lambdaUpdate()
+                        .set(User::getBalance,remainBalance)
+                        .set(remainBalance==0 , User::getStatus,2)
+                        .eq(User::getId,id)
+                        .eq(User::getBalance,user.getBalance())
+                        .update();
+
 
 
     }

@@ -14,4 +14,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     // 拼接的 wrapper 的param 必须设置为 ew
     void updateBalanceByWrapper(@Param("amount") int amount,@Param("ew") LambdaUpdateWrapper<User> updateWrapper);
+
+
+    void deductBalanceById(@Param("id") Long id, @Param("amount") Integer amount);
 }

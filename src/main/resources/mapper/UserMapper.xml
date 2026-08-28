@@ -6,4 +6,7 @@
     <update id="updateBalanceByWrapper">
         update user set balance = balance - #{amount}  ${ew.customSqlSegment}
     </update>
+    <update id="deductBalanceById">
+        update user set balance = balance - #{amount}  ${ew.customSqlSegment}
+    </update>
 </mapper>

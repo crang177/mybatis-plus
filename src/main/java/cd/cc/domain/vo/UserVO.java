@@ -1,5 +1,6 @@
 package cd.cc.domain.vo;
 
+import cd.cc.enums.UserStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,7 +21,7 @@ public class UserVO {
     private String info;
 
     @ApiModelProperty("使用状态（1正常 2冻结）")
-    private Integer status;
+    private UserStatus status;
 
     @ApiModelProperty("账户余额")
     private Integer balance;

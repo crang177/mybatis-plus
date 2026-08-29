@@ -16,10 +16,15 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true # 开启下划线和驼峰映射
     cache-enabled: false # 是否开启二级缓存
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler # 枚举工具类配置
   global-config:
     db-config:
       id-type: assign_id # 设置主键 id 为雪花算法生成
       update-strategy: not_null #更新策略：只更新非空字段
+
+
+
+
 knife4j:
   enable: true
   openapi:

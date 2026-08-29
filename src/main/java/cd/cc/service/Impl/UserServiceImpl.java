@@ -4,6 +4,7 @@ import cd.cc.domain.po.Address;
 import cd.cc.domain.po.User;
 import cd.cc.domain.vo.AddressVO;
 import cd.cc.domain.vo.UserVO;
+import cd.cc.enums.UserStatus;
 import cd.cc.mapper.UserMapper;
 import cd.cc.service.IUserService;
 import cn.hutool.core.bean.BeanUtil;
@@ -26,7 +27,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements IUs
     @Override
     public void deductBalanceById(Long id, Integer amount) {
         User user = getById(id); // 使用service 的方法（MyBatis-Plus）
-        if (user == null || user.getStatus() == 2){
+        if (user == null || user.getStatus() == UserStatus.FREEZE){
             throw new RuntimeException("用户状态异常");
         }
         if (user.getBalance() < amount){

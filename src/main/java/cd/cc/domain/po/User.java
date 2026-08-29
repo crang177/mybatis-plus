@@ -5,13 +5,14 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
 
-@TableName("user") // 映射数据库的表名，默认为类名的小写（满足驼峰命名的转换）
+@TableName(value = "user",autoResultMap = true) // 映射数据库的表名，默认为类名的小写（满足驼峰命名的转换）
 public class User {
 
     /**
@@ -42,7 +43,8 @@ public class User {
     /**
      * 详细信息
      */
-    private String info;
+    @TableField(value = "info",typeHandler = JacksonTypeHandler.class)
+    private UserInfo info;
 
     /**
      * 使用状态（1正常 2冻结）

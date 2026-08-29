@@ -1,5 +1,6 @@
 package cd.cc.domain.vo;
 
+import cd.cc.domain.po.UserInfo;
 import cd.cc.enums.UserStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,7 +19,7 @@ public class UserVO {
     private String username;
 
     @ApiModelProperty("详细信息")
-    private String info;
+    private UserInfo info;
 
     @ApiModelProperty("使用状态（1正常 2冻结）")
     private UserStatus status;

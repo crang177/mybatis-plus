@@ -3,6 +3,8 @@ package mapper;
 import cd.cc.domain.po.User;
 import cd.cc.mapper.UserMapper;
 
+import cd.cc.service.IUserService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +18,8 @@ class UserMapperTest {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private IUserService iUserService;
 
     @Test
     void testInsert() {
@@ -25,7 +29,7 @@ class UserMapperTest {
         user.setPassword("123");
         user.setPhone("18688990011");
         user.setBalance(200);
-        user.setInfo("{\"age\": 24, \"intro\": \"英文老师\", \"gender\": \"female\"}");
+//        user.setInfo("{\"age\": 24, \"intro\": \"英文老师\", \"gender\": \"female\"}");
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
         userMapper.insert(user);
@@ -55,5 +59,22 @@ class UserMapperTest {
     @Test
     void testDeleteUser() {
         userMapper.deleteById(5L);
+    }
+
+
+    @Test
+    void testPage(){
+        // 创建分页对象
+        Page<User> page = new Page<>();
+        // 分页查询
+        Page<User> userPage = iUserService.page(page);
+
+        System.out.println("总页数 = " + userPage.getPages());
+        System.out.println("总记录数 = " + userPage.getTotal());
+        // 记录的user列表
+        for (User user : userPage.getRecords()) {
+            System.out.println(user);
+        }
+
     }
 }

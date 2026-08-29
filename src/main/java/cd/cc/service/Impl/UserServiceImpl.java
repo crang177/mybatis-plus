@@ -1,19 +1,21 @@
 package cd.cc.service.Impl;
 
+import cd.cc.domain.po.Address;
 import cd.cc.domain.po.User;
-import cd.cc.domain.query.UserQuery;
+import cd.cc.domain.vo.AddressVO;
 import cd.cc.domain.vo.UserVO;
 import cd.cc.mapper.UserMapper;
 import cd.cc.service.IUserService;
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +43,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements IUs
 
 
 
+    }
+
+    @Override
+    public UserVO getUserAndAddressById(Long id) {
+        User user = getById(id);
+        UserVO userVO = BeanUtil.copyProperties(user, UserVO.class);
+        List<Address> addresses = Db.lambdaQuery(Address.class)
+                .eq(Address::getUserId, id)
+                .list();
+        userVO.setAddresses(BeanUtil.copyToList(addresses, AddressVO.class));
+        return userVO;
+    }
+
+    @Override
+    public List<UserVO> getUserAndAddressByIds(List<Long> ids) {
+        List<User> users = listByIds(ids);
+        List<UserVO> userVOList = BeanUtil.copyToList(users, UserVO.class);
+
+        List<Address> addressVOList = Db.lambdaQuery(Address.class)
+                .in(Address::getUserId, ids)
+                .list();
+
+        Map<Long, List<Address>> addressMap = addressVOList.stream().collect(Collectors.groupingBy(Address::getUserId));
+
+        userVOList.forEach(userVO -> {
+            userVO.setAddresses(BeanUtil.copyToList(addressMap.get(userVO.getId()), AddressVO.class));
+        });
+
+        return userVOList;
     }
 
 }

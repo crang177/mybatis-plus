@@ -54,9 +54,7 @@ public class UserController {
     @GetMapping("/{id}")
     public  UserVO getById(@PathVariable Long id){
         log.info("根据id查询用户");
-        User user = userService.getById(id);
-        // hutool 包的工具类
-        return BeanUtil.copyProperties(user, UserVO.class);
+        return userService.getUserAndAddressById(id);
     }
 
 
@@ -64,8 +62,7 @@ public class UserController {
     @GetMapping
     public  List<UserVO> getByIds(@RequestParam("ids") List<Long> ids){
         log.info("根据id批量查询用户");
-        List<User> users = userService.listByIds(ids);
-        return BeanUtil.copyToList(users, UserVO.class);
+        return userService.getUserAndAddressByIds(ids);
     }
 
 
